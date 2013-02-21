@@ -2,9 +2,9 @@
 
 function logtxn($data)
 {
-	$logfile = 'qbms.log';
-    //Log the Error
-	$text    = "\n=====QBMS TRANSACTION " . $data['result'] . "====\n";
+	$logfile = 'qbms.log'; //TODO allow custom file name in settings? 
+    
+    $text    = "\n=====QBMS TRANSACTION " . $data['result'] . "====\n";
 	$text .= ' [Date] ' . date('m/d/Y g:i A');
 	$text .= "\n------Transaction Variables------\n";
 	$text .= " [Status Code] " . $data['statusCode'] . "\n";
@@ -28,6 +28,7 @@ function logtxn($data)
 	else
 	{
 		return FALSE;
+        //TODO Notification if write fails 
 	}
 }
 
@@ -88,11 +89,11 @@ function espresso_process_qbms($payment_data)
 		$cardChargeRequest->addChild('NameOnCard', $_POST['qbms_first_name'] . ' ' . $_POST['qbms_last_name']);
 		$cardChargeRequest->addChild('CreditCardAddress', $_POST['qbms_address']);
 		$cardChargeRequest->addChild('CreditCardPostalCode', $_POST['qbms_zip']);
-        $cardChargeRequest->addChild('SalesTaxAmount', '0.0'); //Find out what $payment_data['var'] 'tax' is
+        $cardChargeRequest->addChild('SalesTaxAmount', '0.0'); //TODO Do something here, ee surcharge var from $payment_data ?  
         $cardChargeRequest->addChild('CardSecurityCode', $_POST["qbms_cvv"]);
         
         $xml = $qbXML->asXML();
-   
+
         $header[] = "Content-type: application/x-qbmsxml";
         $header[] = "Content-length: " . strlen($xml);
         
@@ -161,7 +162,7 @@ function espresso_process_qbms($payment_data)
         			'statusMessage' => $statusMessage,
         			'result' => 'SUCCESS',
         			'logpath' => $qbms_settings['logpath']
-        		));
+                  ));
         	}
 
         	add_action('action_hook_espresso_email_after_payment', 'espresso_email_after_payment');
@@ -181,10 +182,9 @@ function espresso_process_qbms($payment_data)
         			'statusMessage' => $statusMessage,
         			'result' => 'FAILURE',
         			'logpath' => $qbms_settings['logpath']
-        		));
+                ));
         	}
         }
-        
         return $payment_data;
     }
 }

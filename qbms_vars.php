@@ -3,6 +3,7 @@
 function espresso_display_qbms($payment_data) {
 	extract($payment_data);
 	global $org_options;
+	
 	$qbms_settings = get_option('event_espresso_qbms_settings');
 	if ($qbms_settings['force_ssl_return']) {
 		$home = str_replace('http://', 'https://', home_url());

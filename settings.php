@@ -15,6 +15,7 @@ function event_espresso_qbms_payment_settings() {
 		$qbms_settings['qbms_testurl'] = 'https://webmerchantaccount.ptc.quickbooks.com/j/AppGateway';
 		$qbms_settings['qbms_logpath'] = $_POST['qbms_logpath'];
 		$qbms_settings['qbms_log'] = $_POST['qbms_log'];
+		$qbms_settings['qbms_force_ssl_return'] = $_POST['qbms_force_ssl_return'];
 		update_option('event_espresso_qbms_settings', $qbms_settings);
 		echo '<div id="message" class="updated fade"><p><strong>' . __('qbms settings saved.', 'event_espresso') . '</strong></p></div>';
 	}
@@ -35,6 +36,7 @@ function event_espresso_qbms_payment_settings() {
 		$default_logdir = wp_upload_dir();
 		$qbms_settings['qbms_logpath'] = $default_logdir['basedir'].'/espresso/gateways/qbms/';
 		$qbms_settings['qbms_log'] = 'off';
+		$qbms_settings['qbms_force_ssl_return'] = 'FALSE';
 		if (add_option('event_espresso_qbms_settings', $qbms_settings, '', 'no') == false) {
 			update_option('event_espresso_qbms_settings', $qbms_settings);
 		}
@@ -144,6 +146,15 @@ function event_espresso_display_qbms_settings() {
 						<option value="off" <?php if ($qbms_settings['qbms_log'] == 'off') echo 'selected="selected"'; ?>> <?php _e('Off', 'event_espresso'); ?></option>
 						<option value="e_only" <?php if ($qbms_settings['qbms_log'] == 'e_only') echo 'selected="selected"'; ?>><?php _e('Errors Only', 'event_espresso'); ?></option>
 						<option value="all" <?php if ($qbms_settings['qbms_log'] == 'all') echo 'selected="selected"'; ?>><?php _e('All', 'event_espresso'); ?></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td class="titledesc"><a href="#" tip="<?php _e('Force SSL Return','event_espresso') ?>" class="tips" tabindex="99"></a><?php _e('Force SSL Return', 'event_espresso') ?>:</td>
+				<td class="forminp">
+					<select name="qbms_force_ssl_return" id="qbms_force_ssl_return" style="min-width:100px;">
+						<option value="TRUE" <?php if ($qbms_settings['qbms_force_ssl_return'] == 'TRUE') echo 'selected="selected"'; ?>> <?php _e('YES', 'event_espresso'); ?></option>
+						<option value="FALSE" <?php if ($qbms_settings['qbms_force_ssl_return'] == 'FALSE') echo 'selected="selected"'; ?>><?php _e('NO', 'event_espresso'); ?></option>
 					</select>
 				</td>
 			</tr>
