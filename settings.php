@@ -21,10 +21,10 @@ function event_espresso_qbms_payment_settings() {
 	}
 	$qbms_settings = get_option('event_espresso_qbms_settings');
 	if (empty($qbms_settings)) {
-		if (file_exists(EVENT_ESPRESSO_GATEWAY_DIR . "/qbms/qbms-logo.png")) {
-			$button_url = EVENT_ESPRESSO_GATEWAY_URL . "/qbms/qbms-logo.png";
+		if (file_exists(EVENT_ESPRESSO_GATEWAY_DIR . "/qbms/qbms-logo.gif")) {
+			$button_url = EVENT_ESPRESSO_GATEWAY_URL . "/qbms/qbms-logo.gif";
 		} else {
-			$button_url = EVENT_ESPRESSO_PLUGINFULLURL . "gateways/qbms/qbms-logo.png";
+			$button_url = EVENT_ESPRESSO_PLUGINFULLURL . "gateways/qbms/qbms-logo.gif";
 		}
 		$qbms_settings['qbms_title'] = '';
 		$qbms_settings['qbms_app_login'] = '';
